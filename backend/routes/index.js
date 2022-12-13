@@ -1,7 +1,9 @@
 var router = require('express').Router();
 
+
 router.get('/', (req, res, next) => {
-  res.send("Anythink backend is up.");
+
+  res.send(JSON.stringify(process.env));
 });
 
 router.get('/health', (req, res, next) => {
