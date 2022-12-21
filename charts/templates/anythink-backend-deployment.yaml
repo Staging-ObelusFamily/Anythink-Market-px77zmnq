@@ -21,7 +21,7 @@ spec:
         - args:
             - sh
             - -c
-            - "poetry run uvicorn --host=0.0.0.0 --port={{ .Values.backend.containerPort }} app.main:app && alembic upgrade head && ./seeds.sh"     
+            - "poetry run uvicorn --host=0.0.0.0 --port={{ .Values.backend.containerPort }} app.main:app"     
           env:
             - name: APP_ENV
               value: dev
@@ -66,7 +66,7 @@ spec:
         - command:
             - sh
             - -c
-            - "poetry run alembic upgrade head"
+            - "poetry run alembic upgrade head && ./seeds.sh"
           env:
             - name: APP_ENV
               value: dev
