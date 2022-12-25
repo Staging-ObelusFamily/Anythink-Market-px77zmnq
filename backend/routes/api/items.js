@@ -14,6 +14,7 @@ router.param("item", function(req, res, next, slug) {
       if (!item) {
         return res.sendStatus(404);
       }
+      
 
       req.item = item;
 
