@@ -71,6 +71,7 @@ router.get("/", auth.optional, function(req, res, next) {
         query._id = { $in: [] };
       }
 
+      
       return Promise.all([
         Item.find(query)
           .limit(Number(limit))
