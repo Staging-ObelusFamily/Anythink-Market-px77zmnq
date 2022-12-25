@@ -73,7 +73,6 @@ router.get("/", auth.optional, function(req, res, next) {
 
       return Promise.all([
         Item.find(query)
-          .populate("seller")
           .limit(Number(limit))
           .skip(Number(offset))
           .sort({ createdAt: "desc" })
@@ -85,9 +84,12 @@ router.get("/", auth.optional, function(req, res, next) {
         var itemsCount = results[1];
         var user = results[2];
         return res.json({
-          items: items.map(function(item) {
-            return item.toJSONFor(user);
-          }),
+          items: await Promise.all(
+            items.map(async function(item) {
+              item.seller = await User.findById(item.seller);
+              return item.toJSONFor(user);
+            })
+          ),
           itemsCount: itemsCount
         });
       });
